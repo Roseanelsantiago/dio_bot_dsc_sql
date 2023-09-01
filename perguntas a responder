@@ -1,0 +1,33 @@
+QUERYS 
+----Quantos pedidos foram feitos por cada cliente?
+SELECT c.idCliente, c.Nome, COUNT(p.idPedido) AS NumeroPedidos
+FROM Cliente c
+LEFT JOIN Pedido p ON c.idCliente = p.idPedido
+GROUP BY c.idCliente, c.Nome;
+
+-----Algum vendedor também é fornecedor?
+SELECT DISTINCT F.idFornecedor, F.RazãoSocial
+FROM Fornecedor F
+INNER JOIN EstoqueFornecedor EF ON F.idFornecedor = EF.idEstoqueFornecedor
+INNER JOIN Produto P ON EF.idProdutoFornecedor = P.idProduto
+
+------Relação de produtos fornecedores e estoques;
+SELECT P.idProduto, P.Categoria, P.Descrição, F.RazãoSocial AS Fornecedor, E.Local AS Estoque
+FROM Produto P
+LEFT JOIN EstoqueProduto EP ON P.idProduto = EP.idProduto
+LEFT JOIN Estoque E ON EP.idEstoqueProduto = E.idEstoque
+LEFT JOIN EstoqueFornecedor EF ON P.idProduto = EF.idProdutoFornecedor
+LEFT JOIN Fornecedor F ON EF.idEstoqueFornecedor = F.idFornecedor;
+
+-------Relação de nomes dos fornecedores e nomes dos produtos;
+
+SELECT F.RazãoSocial AS NomeFornecedor, P.Descrição AS NomeProduto
+FROM Fornecedor F
+INNER JOIN EstoqueFornecedor EF ON F.idFornecedor = EF.idEstoqueFornecedor
+INNER JOIN Produto P ON EF.idProdutoFornecedor = P.idProduto;
+
+
+
+
+
+
